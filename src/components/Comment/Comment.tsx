@@ -134,7 +134,7 @@ const Comment: React.FC<IProps> = ({ title, setShowModal }) => {
     }
   };
 
-  const titleWithAction = `${title} - ${commentAlreadyExists ? 'Edit' : 'Create'}`;
+  const titleWithAction = `${title} - ${commentAlreadyExists ? 'Edit' : 'New'} comment`;
 
   return (
     <Modal title={titleWithAction} setShowModal={setShowModal} handleOnClick={submitData}>
