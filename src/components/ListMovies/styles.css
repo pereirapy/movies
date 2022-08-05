@@ -1,0 +1,17 @@
+.movies-container {
+  margin: auto;
+  margin-top: 50px;
+  border: 2px solid rgba(0, 0, 0, 0.05);;
+}
+
+.movies-message {
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  width: auto;
+}
+
+.cursor {
+  cursor: pointer;
+}
+

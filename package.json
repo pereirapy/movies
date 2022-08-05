@@ -10,18 +10,32 @@
     "@types/node": "^16.11.47",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
+    "firebase": "^9.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "prettier": "^2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-sass-guidelines": "^7.0.0",
+    "stylelint-prettier": "^1.1.2"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start:https": "export HTTPS=true&&SSL_CRT_FILE=local.netlify.app.pem&&SSL_KEY_FILE=local.netlify.app-key.pem react-scripts start",
+    "format": "prettier --config .prettierrc \"./src/**/*.ts\" \"src/**/*.tsx\" --write",
+    "lint:types": "tsc --noEmit",
     "test": "react-scripts test",
+    "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://tender-mclean-00a2bd.netlify.app",
   "eslintConfig": {
     "extends": [
       "react-app",
