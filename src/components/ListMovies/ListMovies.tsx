@@ -15,9 +15,17 @@ const Error: React.FC<{ error: string }> = ({ error }) => {
   );
 };
 
+const orderMovies = (data: IMovie[]) =>
+  data.sort((a: IMovie, b: IMovie) => {
+    let fa = a.title.toLocaleUpperCase();
+    let fb = b.title.toLocaleUpperCase();
+    if (fa < fb) return -1;
+    if (fa > fb) return 1;
+    return 0;
+  });
+
 const ListMovies: React.FC = () => {
   const [dataMovies, setDataMovies] = useState<IMovie[]>([]);
-  const [dataMoviesFiltered, setDataMoviesFiltered] = useState<IMovie[]>([]);
   const [modalData, setModalData] = useState<string>('');
   const [searchTitle, setSearchTitle] = useState<string | null>(null);
   const [searchGenre, setSearchGenre] = useState<string | null>(null);
@@ -37,8 +45,7 @@ const ListMovies: React.FC = () => {
           const data = await response.json();
           setLoading(false);
           setError(null);
-          setDataMovies(data);
-          setDataMoviesFiltered(data);
+          setDataMovies(orderMovies(data));
         }
       } catch (e: any) {
         const errorString = e?.error.message || 'Error when try to get data from server';
@@ -51,39 +58,33 @@ const ListMovies: React.FC = () => {
   }, []);
 
   const allUniqueGenres = useMemo(() => {
-    return dataMovies.reduce((previousMovie, currentMovie) => {
-      currentMovie.genre.map(tag => {
-        if (!previousMovie.includes(tag)) {
-          previousMovie = [...previousMovie, tag];
-        }
+    return dataMovies
+      .reduce((previousMovie, currentMovie) => {
+        currentMovie.genre.map(tag => {
+          if (!previousMovie.includes(tag)) {
+            previousMovie = [...previousMovie, tag];
+          }
+          return previousMovie;
+        });
         return previousMovie;
-      });
-      return previousMovie;
-    }, [] as string[]);
+      }, [] as string[])
+      .sort();
   }, [dataMovies]);
 
-  useEffect(() => {
-    if (searchTitle && searchTitle !== '') {
-      const getMoviesFilteredByTitle = () =>
-        dataMoviesFiltered.filter(movie => movie.title.toLocaleUpperCase() === searchTitle.toLocaleUpperCase());
+  const getMoviesFilteredByTitle = (data: IMovie[]) =>
+    searchTitle && searchTitle !== ''
+      ? data.filter(movie => movie.title.toLocaleUpperCase().includes(searchTitle.toLocaleUpperCase()))
+      : data;
 
-      setDataMoviesFiltered(getMoviesFilteredByTitle());
-    } else if (searchTitle !== null) {
-      setDataMoviesFiltered(dataMovies);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTitle]);
+  const getMoviesFilteredByGenre = (data: IMovie[]) =>
+    searchGenre && searchGenre !== '' ? data.filter(movie => movie.genre.includes(searchGenre)) : data;
 
-  useEffect(() => {
-    if (searchGenre && searchGenre !== '') {
-      const getMoviesFilteredByGenre = () => dataMoviesFiltered.filter(movie => movie.genre.includes(searchGenre));
+  const pipe =
+    (...fns: any[]) =>
+    (x: any) =>
+      fns.reduce((v, f) => f(v), x);
 
-      setDataMoviesFiltered(getMoviesFilteredByGenre());
-    } else if (searchGenre !== null) {
-      setDataMoviesFiltered(dataMovies);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchGenre]);
+  const dataMoviesFiltered = pipe(getMoviesFilteredByTitle, getMoviesFilteredByGenre)(dataMovies);
 
   if (error) return <Error error={error} />;
 
