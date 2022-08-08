@@ -14,7 +14,7 @@ const Movie: React.FC<IProps> = ({ data, handleModal }) => {
       <td>{data.runtime}</td>
       <td>{data.revenue}</td>
       <td>{data.rating}</td>
-      <td>{data.genre.toString()}</td>
+      <td>{data.genre.join(", ")}</td>
     </tr>
   );
 };

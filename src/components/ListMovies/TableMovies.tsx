@@ -75,12 +75,12 @@ const TableMovies: React.FC<IProps> = ({
       <table className="table table-striped table-hover cursor">
         <thead>
           <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Year</th>
-            <th scope="col">Runtime</th>
-            <th scope="col">Revenue</th>
-            <th scope="col">Rating</th>
-            <th scope="col">Genres</th>
+            <th scope="col" style={{ width: "40%" }}>Title</th>
+            <th scope="col" style={{ width: "5%" }}>Year</th>
+            <th scope="col" style={{ width: "5%" }}>Runtime</th>
+            <th scope="col" style={{ width: "5%" }}>Revenue</th>
+            <th scope="col" style={{ width: "5%" }}>Rating</th>
+            <th scope="col" style={{ width: "40%" }}>Genres</th>
           </tr>
           <tr>
             <th scope="col">

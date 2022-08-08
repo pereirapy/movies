@@ -10,7 +10,7 @@
 
 ### TypeScript
 
-- I decided to use typeScript to help me with the data that came from JSON and to avoid trash code, like unsed variable, components and etc.
+- I decided to use typeScript to help me with the data that came from JSON and to avoid trash code, like unused variable, components and etc.
 
 ### Folders
 
@@ -39,5 +39,5 @@
 - Authentication to firebase
 - Pagination
 - Envs vars to hide some firebase keys
-- Unit test for some importants components
+- Unit test for some important components
 - Cosmetics updates
